@@ -1,0 +1,25 @@
+import React, { createContext, useState, useContext } from "react";
+
+const CartContext = createContext();
+
+export const useCart = () => useContext(CartContext);
+
+export const CartProvider = ({ children }) => {
+  const [cart, setCart] = useState([]);
+  const [showCart, setShowCart] = useState(false);
+
+  const addToCart = (product) => {
+    setCart((prevCart) => [...prevCart, product]);
+  };
+
+  const handleCloseCart = () => setShowCart(false);
+  const handleOpenCart = () => setShowCart(true);
+
+  return (
+    <CartContext.Provider
+      value={{ cart, addToCart, showCart, handleCloseCart, handleOpenCart }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
+};
